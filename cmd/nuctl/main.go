@@ -23,9 +23,13 @@ import (
 
 	"github.com/nuclio/errors"
 	"github.com/nuclio/nuclio-sdk-go"
+	_ "net/http/pprof"
 )
 
 func main() {
+	go func() {
+		log.Println(http.ListenAndServe("localhost:5054", nil))
+	}()
 	if err := app.Run(); err != nil {
 		if errWithCode, ok := err.(*nuclio.ErrorWithStatusCode); ok && errWithCode != nil {
 			os.Stdout.WriteString(errWithCode.Error())

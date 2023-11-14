@@ -24,6 +24,7 @@ import (
 	"github.com/nuclio/nuclio/pkg/common"
 
 	"github.com/nuclio/errors"
+	_ "net/http/pprof"
 )
 
 func main() {
@@ -34,6 +35,10 @@ func main() {
 	} else {
 		defaultResyncIntervalStr = common.GetEnvOrDefaultString("NUCLIO_CONTROLLER_RESYNC_INTERVAL", "10m")
 	}
+
+	go func() {
+		log.Println(http.ListenAndServe("localhost:5051", nil))
+	}()
 
 	kubeconfigPath := flag.String("kubeconfig-path", os.Getenv("KUBECONFIG"), "Path of kubeconfig file")
 	namespace := flag.String("namespace", "", "Namespace to listen on, or * for all")

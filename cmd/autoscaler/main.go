@@ -23,6 +23,7 @@ import (
 	"github.com/nuclio/nuclio/cmd/autoscaler/app"
 
 	"github.com/nuclio/errors"
+	_ "net/http/pprof"
 )
 
 func main() {
@@ -32,6 +33,9 @@ func main() {
 	flag.Parse()
 
 	*namespace = getNamespace(*namespace)
+	go func() {
+		log.Println(http.ListenAndServe("localhost:5050", nil))
+	}()
 
 	if err := app.Run(*platformConfigurationPath, *namespace, *kubeconfigPath); err != nil {
 		errors.PrintErrorStack(os.Stderr, err, 5)

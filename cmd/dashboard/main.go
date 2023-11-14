@@ -25,6 +25,7 @@ import (
 	_ "github.com/nuclio/nuclio/pkg/dashboard/resource"
 
 	"github.com/nuclio/errors"
+	_ "net/http/pprof"
 )
 
 func main() {
@@ -36,6 +37,9 @@ func main() {
 	if defaultPlatformAuthorizationMode == "" {
 		defaultPlatformAuthorizationMode = "service-account"
 	}
+	go func() {
+		log.Println(http.ListenAndServe("localhost:5052", nil))
+	}()
 
 	// git templating env vars
 	templatesGitRepository := flag.String("templates-git-repository", common.GetEnvOrDefaultString("NUCLIO_TEMPLATES_GIT_REPOSITORY", ""), "Git templates repo's name")

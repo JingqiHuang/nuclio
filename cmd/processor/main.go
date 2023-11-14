@@ -28,6 +28,7 @@ import (
 
 	"github.com/nuclio/errors"
 	"github.com/v3io/version-go"
+	_ "net/http/pprof"
 )
 
 func run() error {
@@ -60,6 +61,9 @@ func run() error {
 }
 
 func main() {
+	go func() {
+		log.Println(http.ListenAndServe("localhost:5055", nil))
+	}()
 	if err := run(); err != nil {
 		errors.PrintErrorStack(os.Stderr, err, 5)
 

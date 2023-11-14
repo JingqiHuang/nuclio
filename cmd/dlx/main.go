@@ -24,6 +24,7 @@ import (
 	"github.com/nuclio/nuclio/pkg/common"
 
 	"github.com/nuclio/errors"
+	_ "net/http/pprof"
 )
 
 func main() {
@@ -34,7 +35,9 @@ func main() {
 	flag.Parse()
 
 	*namespace = getNamespace(*namespace)
-
+	go func() {
+		log.Println(http.ListenAndServe("localhost:5053", nil))
+	}()
 	if err := app.Run(*platformConfigurationPath,
 		*namespace,
 		*kubeconfigPath,
