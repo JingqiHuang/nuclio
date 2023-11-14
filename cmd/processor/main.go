@@ -28,6 +28,8 @@ import (
 
 	"github.com/nuclio/errors"
 	"github.com/v3io/version-go"
+	"log"
+	"net/http"
 	_ "net/http/pprof"
 )
 

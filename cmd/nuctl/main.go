@@ -23,6 +23,8 @@ import (
 
 	"github.com/nuclio/errors"
 	"github.com/nuclio/nuclio-sdk-go"
+	"log"
+	"net/http"
 	_ "net/http/pprof"
 )
 

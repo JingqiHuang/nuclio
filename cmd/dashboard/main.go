@@ -25,6 +25,8 @@ import (
 	_ "github.com/nuclio/nuclio/pkg/dashboard/resource"
 
 	"github.com/nuclio/errors"
+	"log"
+	"net/http"
 	_ "net/http/pprof"
 )
 

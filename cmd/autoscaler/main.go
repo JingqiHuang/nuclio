@@ -23,6 +23,8 @@ import (
 	"github.com/nuclio/nuclio/cmd/autoscaler/app"
 
 	"github.com/nuclio/errors"
+	"log"
+	"net/http"
 	_ "net/http/pprof"
 )
 
